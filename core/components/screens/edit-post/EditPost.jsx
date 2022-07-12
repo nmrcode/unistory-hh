@@ -59,7 +59,7 @@ const EditPost = () => {
       </button>
       <form className={s.form} onSubmit={handleOnSubmit}>
         <label htmlFor="title" className={s.label}>
-          Запись {titleLocal}
+          {`Запись: "${titleLocal}"`}
         </label>
         <input
           name="title"
