@@ -16,7 +16,9 @@ const CardItem = ({ id, title, content }) => {
   return (
     <article className={s.article}>
       <h3 className={s.title}>{title}</h3>
-      <div className={s.content}>{content}</div>
+      <div className={s.content}>
+        <span>{content}</span>
+      </div>
       <button className={s.button} onClick={() => handlerEditPost(id)}>
         перейти
       </button>
