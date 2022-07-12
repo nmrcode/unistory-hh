@@ -11,36 +11,45 @@ import {
 } from "../../../store/postsSlice";
 
 const EditPost = () => {
+  // Получаем текущий пост, который лежит в стейте (заносим его при переходе на эту страницу)
   const { currentPost } = useSelector((state) => state.posts);
+  const { id } = currentPost;
+
+  //   Начальными значениями будут значения из стора
   const [titleLocal, setTitleLocal] = useState(currentPost.title);
   const [contentLocal, setContentLocal] = useState(currentPost.content);
 
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { id } = currentPost;
-
   const handlerOnNavigateBack = () => {
     router.back();
   };
 
+  // Изменяем локальный стейт для дальнейшего занесения в стор
   const onChangeTitle = (text) => {
     setTitleLocal(text);
   };
 
+  // Изменяем локальный стейт для дальнейшего занесения в стор
   const onChangeContent = (text) => {
     setContentLocal(text);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    // Вызываем изменение, самое главное передать айдишник, тк по нему идет поиск
     dispatch(editPost({ id, title: titleLocal, content: contentLocal }));
     router.push("/");
   };
 
   const handleOnDelete = (id) => {
-    dispatch(removePost(id));
-    router.push("/");
+    const result = confirm("Вы действительно хотите удалить пост ?");
+    // Если ответ положительный, то вызывается удаление поста и возращение на домашнюю страницу
+    if (result) {
+      dispatch(removePost(id));
+      router.push("/");
+    }
   };
 
   return (

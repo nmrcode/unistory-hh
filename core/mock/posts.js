@@ -1,7 +1,7 @@
 export const postsMockData = [
   {
     id: Math.random().toString(16).slice(2),
-    title: "Title",
+    title: "Super puper long title with awesome text",
     content: "Content",
   },
   {
