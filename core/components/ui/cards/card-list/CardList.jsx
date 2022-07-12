@@ -4,7 +4,7 @@ import s from "./CardList.module.scss";
 import CardItem from "../card-item/CardItem";
 
 const CardList = () => {
-  const { posts } = useSelector((state) => state.posts);
+  const posts = useSelector((state) => state.posts.posts);
 
   return (
     <div className={s.wrapper}>

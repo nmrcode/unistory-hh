@@ -3,7 +3,12 @@ import s from "./EditPost.module.scss";
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost, getPost } from "../../../store/postsSlice";
+import {
+  addPost,
+  editPost,
+  getPost,
+  removePost,
+} from "../../../store/postsSlice";
 
 const EditPost = () => {
   const { currentPost } = useSelector((state) => state.posts);
@@ -13,7 +18,7 @@ const EditPost = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { title, id, content } = currentPost;
+  const { id } = currentPost;
 
   const handlerOnNavigateBack = () => {
     router.back();
@@ -29,6 +34,13 @@ const EditPost = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    dispatch(editPost({ id, title: titleLocal, content: contentLocal }));
+    router.push("/");
+  };
+
+  const handleOnDelete = (id) => {
+    dispatch(removePost(id));
+    router.push("/");
   };
 
   return (
@@ -38,7 +50,7 @@ const EditPost = () => {
       </button>
       <form className={s.form} onSubmit={handleOnSubmit}>
         <label htmlFor="title" className={s.label}>
-          Запись {currentPost.title}
+          Запись {titleLocal}
         </label>
         <input
           name="title"
@@ -56,7 +68,11 @@ const EditPost = () => {
           className={s.textarea}
         />
         <div className={s.buttons}>
-          <button type="button" className={classNames(s.button, s.button__red)}>
+          <button
+            type="button"
+            className={classNames(s.button, s.button__red)}
+            onClick={() => handleOnDelete(id)}
+          >
             Удалить
           </button>
           <button type="submit" className={s.button}>
